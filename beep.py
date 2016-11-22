@@ -2,5 +2,6 @@
 # -*- encoding:utf-8 -*-
 
 
-def beep():
-    print('\a')
+def beep(count=1):
+    for x in range(count):
+        print('\a')
