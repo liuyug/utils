@@ -15,22 +15,6 @@ import socks
 from sockshandler import SocksiPyHandler
 
 
-def beep():
-    print('\a')
-
-
-def string_to_bool(text):
-    return text.lower() in ['true', 'on', 'yes', '1']
-
-
-def page_query(q, page=None, page_size=50):
-    if page:
-        query = q.limit(page_size)
-        query = query.offset(page * page_size)
-        return query
-    return q
-
-
 def get_user_agent(idx=-1):
     user_agent = [
         'Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20130619 Firefox/17.0',
