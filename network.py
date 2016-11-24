@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding:utf-8 -*-
 
+import logging
 import time
 import gzip
 import random
@@ -14,6 +15,9 @@ from six.moves import StringIO
 # pysocks
 import socks
 from sockshandler import SocksiPyHandler
+
+
+logger = logging.getLogger(__name__)
 
 
 def get_user_agent(idx=-1):
@@ -84,6 +88,8 @@ def url_downloader(url, data=None, path=None, cookie=None,
             retry -= 1
             err_msg = str(err)
             if retry > 0:
+                logger.debug('Error: %s... Try again after %s seconds' % (
+                    retry_ivl, err_msg))
                 time.sleep(retry_ivl)
                 retry_ivl += retry_ivl
                 timeout += timeout
