@@ -9,6 +9,7 @@ from six.moves.urllib.error import URLError
 from six.moves.urllib.request import Request, build_opener, HTTPCookieProcessor
 from six.moves.urllib.parse import urlencode
 from six.moves.http_cookiejar import CookieJar
+from six.moves import StringIO
 
 # pysocks
 import socks
@@ -65,7 +66,8 @@ def url_downloader(url, data=None, path=None, cookie=None,
             response = opener.open(request, timeout=timeout)
             content_encoding = response.info().get('content-encoding')
             if content_encoding:
-                r_data = gzip.decompress(response.read())
+                with gzip.GzipFile(fileobj=StringIO(response.read())) as f:
+                    r_data = f.read()
             else:
                 r_data = response.read()
             if path:
