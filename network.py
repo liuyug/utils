@@ -31,7 +31,8 @@ def get_user_agent(idx=-1):
 
 
 def url_downloader(url, data=None, path=None, cookie=None,
-                   timeout=5, retry=1, retry_ivl=5, agent=None, proxy=None):
+                   timeout=5, retry=1, retry_ivl=5,
+                   referer=None, agent=None, proxy=None):
     """Download URL link
     url:    url to download
     data:   post data
@@ -48,6 +49,8 @@ def url_downloader(url, data=None, path=None, cookie=None,
                 data = urlencode(data).encode('ascii')
             request = Request(url, data=data)
             request.add_header('User-Agent', agent or get_user_agent())
+            if referer:
+                request.add_header('Referer', referer)
             if data:
                 request.add_header(
                     'Content-Type',
@@ -94,7 +97,7 @@ def url_downloader(url, data=None, path=None, cookie=None,
                 retry_ivl += retry_ivl
                 timeout += timeout
             else:
-                mime = r_data = real_url = None
+                path = mime = r_data = real_url = None
                 break
     return {
         'mime': mime,
